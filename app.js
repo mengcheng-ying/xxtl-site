@@ -84,7 +84,7 @@
     { label: '下载中心', icon: 'download', href: 'download.html', key: 'download' },
     { label: '新闻公告', icon: 'newspaper', href: 'news.html', key: 'news' },
     { label: '活动专区', icon: 'sparkles', href: 'activity.html', key: 'activity' },
-    { label: '福利兑换', icon: 'ticket', href: 'gift.html', key: 'gift' }
+    { label: '礼包码', icon: 'ticket', href: 'gift.html', key: 'gift' }
   ];
   var ALIAS = { 'news-detail': 'news' }; // 详情页归属「新闻公告」
 
@@ -128,7 +128,7 @@
   function renderFooter() {
     var host = document.getElementById('siteFooter');
     if (!host) return;
-    var games = NAV.slice(1, 4).concat([{ label: '新闻公告', href: 'news.html' }, { label: '活动专区', href: 'activity.html' }, { label: '福利兑换', href: 'gift.html' }]);
+    var games = NAV.slice(1, 4).concat([{ label: '新闻公告', href: 'news.html' }, { label: '活动专区', href: 'activity.html' }, { label: '礼包码', href: 'gift.html' }]);
     var helps = [
       { label: '常见问题', href: 'download.html#faq' },
       { label: '客服中心', href: 'legal.html#service' },

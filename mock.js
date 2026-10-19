@@ -433,51 +433,7 @@ var DB = {
         ],
         "expire": ""
       }
-    },
-    "welfare": [
-      {
-        "id": "w1",
-        "icon": "message-circle",
-        "title": "关注公众号",
-        "desc": "关注官方公众号，回复「屠龙」领取",
-        "reward": "金条 ×5、双倍经验卷 ×1"
-      },
-      {
-        "id": "w2",
-        "icon": "users",
-        "title": "加入玩家 QQ 群",
-        "desc": "进群后联系管理员验证角色名",
-        "reward": "随机坐骑 ×1"
-      },
-      {
-        "id": "w3",
-        "icon": "clipboard-list",
-        "title": "每日签到",
-        "desc": "游戏内签到满 7 天",
-        "reward": "强化石 ×30"
-      },
-      {
-        "id": "w4",
-        "icon": "user-plus",
-        "title": "邀请好友",
-        "desc": "好友完成首次充值后发放",
-        "reward": "元宝 ×2000"
-      },
-      {
-        "id": "w5",
-        "icon": "star",
-        "title": "关注论坛并评论",
-        "desc": "在玩家论坛发帖或评论官方置顶帖",
-        "reward": "幻化材料 ×5"
-      },
-      {
-        "id": "w6",
-        "icon": "shield-check",
-        "title": "绑定手机号",
-        "desc": "账号安全设置中绑定手机",
-        "reward": "二级密码保护 + 金条 ×3"
-      }
-    ]
+    }
   },
   "servers": [
     {
