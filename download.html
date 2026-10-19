@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>下载游戏 - 小小屠龙-冰雪复古下载</title>
+<meta name="description" content="小小屠龙 · 冰雪复古 安卓 / iOS / PC 模拟器 三端下载，三端数据互通。首区 2026 年 10 月 20 日 14:00 开启。">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="download">
+<header class="site-header" id="siteHeader"></header>
+<main class="page">
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Download</span>
+        <h1 class="section-title">下载 <span class="hl">小小屠龙</span></h1>
+        <p class="section-desc" id="dlNotice"></p>
+      </div>
+      <div class="grid grid-3" id="dlGrid"></div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Servers</span>
+        <h2 class="section-title" style="font-size:26px">开服时间表</h2>
+        <p class="section-desc">新区开服时间以官方公告为准，本页随公告同步更新。</p>
+      </div>
+      <div class="table-wrap"><table class="data-table" id="srvTable"></table></div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Requirements</span>
+        <h2 class="section-title" style="font-size:26px">配置要求</h2>
+      </div>
+      <div class="table-wrap"><table class="data-table" id="cfgTable"></table></div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">FAQ</span>
+        <h2 class="section-title" style="font-size:26px">安装与常见问题</h2>
+      </div>
+      <div class="accordion" id="faqBox"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="siteFooter"></footer>
+<button class="to-top" id="toTop" aria-label="返回顶部"></button>
+
+<script src="mock.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
+<script>
+(function () {
+  var esc = App.esc;
+
+  document.getElementById('dlNotice').innerHTML =
+    '首区 <b>' + esc(DB.servers[0].openTime) + '</b> 开启，客户端于开服当天开放下载。' +
+    '当前为预约期，正式下载入口以本页更新为准。';
+
+  /* 三端下载卡 */
+  document.getElementById('dlGrid').innerHTML = DB.downloads.map(function (d) {
+    var ready = d.url && d.url !== '#';
+    var btn = ready
+      ? '<a class="btn btn-gold btn-block" href="' + d.url + '" target="_blank" rel="noopener">下载 ' + esc(d.platform.split(' ')[0]) + '</a>'
+      : '<span class="btn btn-ghost btn-block" aria-disabled="true" style="opacity:.55;cursor:not-allowed">开服当天开放</span>';
+    return '<div class="card corner reveal">' +
+      '<div class="f-icon" data-icon="' + d.icon + '" data-icon-size="24"></div>' +
+      '<h3 class="card-title">' + esc(d.platform) + '</h3>' +
+      '<p class="card-text">版本 ' + esc(d.version) + ' · 安装包 ' + esc(d.size) + '</p>' +
+      '<p class="card-text">' + esc(d.note) + '</p>' +
+      '<div style="margin-top:18px">' + btn + '</div></div>';
+  }).join('');
+
+  /* 开服表 */
+  document.getElementById('srvTable').innerHTML =
+    '<thead><tr><th>区服</th><th>开服时间</th><th>状态</th></tr></thead><tbody>' +
+    DB.servers.map(function (s) {
+      var cls = s.status === '即将开启' ? 'tag-gold' : (s.status === '已开启' ? 'tag-ok' : 'tag-gray');
+      return '<tr><td>' + esc(s.name) + '</td><td>' + esc(s.openTime) + '</td>' +
+        '<td><span class="tag ' + cls + '">' + esc(s.status) + '</span></td></tr>';
+    }).join('') + '</tbody>';
+
+  /* 配置要求 */
+  document.getElementById('cfgTable').innerHTML =
+    '<thead><tr><th>项目</th><th>Android</th><th>iOS</th><th>PC / 模拟器</th></tr></thead><tbody>' +
+    DB.config.map(function (c) {
+      return '<tr><td>' + esc(c.item) + '</td><td>' + esc(c.android) + '</td><td>' + esc(c.ios) + '</td><td>' + esc(c.pc) + '</td></tr>';
+    }).join('') + '</tbody>';
+
+  /* FAQ 手风琴 */
+  document.getElementById('faqBox').innerHTML = DB.faq.map(function (f, i) {
+    return '<div class="acc-item">' +
+      '<button class="acc-head" type="button" aria-expanded="' + (i === 0) + '">' + esc(f.q) +
+        '<span data-icon="chevron-down" data-icon-size="18"></span></button>' +
+      '<div class="acc-body"' + (i === 0 ? '' : ' hidden') + '><p>' + esc(f.a) + '</p></div></div>';
+  }).join('');
+
+  App.initDynamic(document);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>小小屠龙-冰雪复古下载 - 官方网站</title>
+<meta name="description" content="小小屠龙 · 冰雪复古：1.76 经典内核复刻，单职业公平竞技，行会攻城万人同屏，手机 PC 数据互通。">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="home">
+<header class="site-header" id="siteHeader"></header>
+
+<main class="page">
+
+  <!-- ============ Hero ============ -->
+  <section class="hero">
+    <div class="hero-bg hero-bg--desktop" id="heroBgDesktop"></div>
+    <div class="hero-bg hero-bg--mobile" id="heroBgMobile"></div>
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <span class="hero-badge" data-icon="snowflake" data-icon-size="14">1.76 冰雪复古 · 首服 10 月 20 日开启</span>
+        <h1 class="wordmark">小小屠龙</h1>
+        <div class="wordmark-sub"><b>冰雪复古</b><i></i></div>
+        <p class="hero-slogan"><strong>冰雪未消，屠龙不止。</strong>复刻 1.76 的热血内核，重走冰封沙城。单职业公平竞技，行会攻城万人同屏，装备全靠打怪爆出。</p>
+        <div class="hero-actions">
+          <a class="btn btn-gold btn-lg" href="https://229663.youxin75.com/qudao.php?s=/Download/f/WzUxOTEsNTE5MCwyMjk2NjNd" target="_blank" rel="noopener" data-icon="download" data-icon-size="18">立即下载</a>
+        </div>
+        <div class="hero-meta">
+          <span data-icon="gem" data-icon-size="15">版本 <b id="hVersion"></b></span>
+          <span data-icon="calendar" data-icon-size="15">更新 <b id="hUpdateAt"></b></span>
+          <span data-icon="smartphone" data-icon-size="15">安装包 <b id="hSize"></b></span>
+          <span data-icon="server" data-icon-size="15">互通 <b>手机 / PC 双端</b></span>
+        </div>
+      </div>
+      <aside class="hero-qr">
+        <h4>扫码直接下载</h4>
+        <div class="qr-box"><img src="assets/qr-download.png" alt="小小屠龙-冰雪复古 官方下载二维码" width="168" height="168" loading="lazy"></div>
+        <p>微信 / 浏览器扫码，安卓 iOS 通用</p>
+        <p style="color:var(--sub)">首服「1 服」开启倒计时</p>
+        <div class="countdown" id="openCountdown"></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ 数据条 ============ -->
+  <div class="container">
+    <div class="stat-strip reveal" id="statStrip"></div>
+  </div>
+
+  <!-- ============ 六大特色 ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Core Features</span>
+        <h2 class="section-title">为什么选择 <span class="hl">冰雪复古</span></h2>
+        <p class="section-desc">拒绝数值堆叠与商城直购，把 1.76 最原始的打怪爆装节奏还给你。</p>
+      </div>
+      <div class="grid grid-3" id="featureGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ 三大职业 ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Classes</span>
+        <h2 class="section-title">单职业，<span class="hl">同一起跑线</span></h2>
+        <p class="section-desc">没有职业克制，也没有繁琐转职。输出、承伤、打宝、PK 全靠同一套成长线拉开差距。</p>
+      </div>
+      <div class="grid" style="gap:24px" id="classGrid"></div>
+      <div style="text-align:center;margin-top:36px" class="reveal">
+        <a class="btn btn-ghost" href="classes.html" data-icon="arrow-right" data-icon-size="16">查看职业详情与技能</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 游戏画面 ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Screenshots</span>
+        <h2 class="section-title">冰封大陆的真实画面</h2>
+        <p class="section-desc">点击缩略图切换查看。以下均为游戏内实机截图。</p>
+      </div>
+      <div class="reveal">
+        <div class="shot-stage"><img id="shotStage" src="" alt="游戏画面"><div class="shot-cap" id="shotCap"></div></div>
+        <div class="shot-strip" id="shotStrip"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 公告 + 活动 ============ -->
+  <section class="section">
+    <div class="container split">
+      <div class="panel reveal">
+        <div class="section-head" style="margin-bottom:20px">
+          <span class="eyebrow">News</span>
+          <h2 class="section-title" style="font-size:24px">最新公告</h2>
+        </div>
+        <div id="homeNews"></div>
+        <div style="margin-top:20px">
+          <a class="btn btn-ghost btn-block" href="news.html" data-icon="newspaper" data-icon-size="16">查看全部公告</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="section-head" style="margin-bottom:20px">
+          <span class="eyebrow">Events</span>
+          <h2 class="section-title" style="font-size:24px">进行中的活动</h2>
+        </div>
+        <div class="grid" style="gap:16px" id="homeActs"></div>
+        <div style="margin-top:20px">
+          <a class="btn btn-gold btn-block" href="activity.html" data-icon="sparkles" data-icon-size="16">进入活动专区</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="siteFooter"></footer>
+<button class="to-top" id="toTop" aria-label="返回顶部"></button>
+
+<script src="mock.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
+<script>
+/* ---------- 首页渲染 ---------- */
+(function () {
+  var esc = App.esc;
+
+  /* Hero 素材与版本信息 */
+  document.getElementById('heroBgDesktop').style.backgroundImage = 'url("' + IMG.hero + '")';
+  document.getElementById('heroBgMobile').style.backgroundImage = 'url("' + IMG.heroMobile + '")';
+  document.getElementById('hVersion').textContent = DB.brand.version;
+  document.getElementById('hUpdateAt').textContent = DB.brand.updateAt;
+  document.getElementById('hSize').textContent = DB.brand.size;
+
+  /* 首服开服倒计时 */
+  document.getElementById('openCountdown').dataset.countdown = DB.brand.openTime;
+
+  /* 数据条 */
+  document.getElementById('statStrip').innerHTML = DB.stats.map(function (s) {
+    return '<div class="stat"><b data-countup="' + s.value + '" data-suffix="' + s.unit + '" data-dec="' + s.dec + '">0</b><span>' + s.label + '</span></div>';
+  }).join('');
+
+  /* 六大特色 */
+  document.getElementById('featureGrid').innerHTML = DB.features.map(function (f, i) {
+    return '<div class="card feature-card corner reveal" style="--d:' + (i % 3) * 90 + 'ms">' +
+      '<div class="f-icon" data-icon="' + f.icon + '" data-icon-size="22"></div>' +
+      '<h3 class="card-title">' + f.title + '</h3>' +
+      '<p class="card-text">' + f.desc + '</p></div>';
+  }).join('');
+
+  /* 单职业（本作为单职业设定） */
+  (function () {
+    var c = DB.classes[0], s = c.stats;
+    function bar(label, v) { return '<div class="stat-bar"><div><span>' + label + '</span><span>' + v + '</span></div><i><b style="width:' + v + '%"></b></i></div>'; }
+    document.getElementById('classGrid').innerHTML =
+      '<div class="card corner reveal" style="grid-column:1/-1">' +
+        '<div class="split" style="align-items:start;gap:32px">' +
+          '<div style="max-width:320px;width:100%;margin:0 auto">' +
+            '<div class="class-art">' +
+              '<img src="' + IMG[c.art] + '" alt="' + c.name + '立绘">' +
+              '<span class="class-role tag tag-blue">' + c.role + '</span>' +
+              '<div class="class-name"><b>' + c.name + '</b><span>' + c.en + '</span></div>' +
+            '</div>' +
+          '</div>' +
+          '<div>' +
+            '<h3 class="section-title" style="font-size:24px;margin-bottom:10px">' + c.name + '</h3>' +
+            '<p class="card-text" style="margin-bottom:16px">' + c.desc + '</p>' +
+            bar('攻击', s.atk) + bar('防御', s.def) + bar('生存', s.hp) + bar('控制', s.ctrl) +
+            '<p class="card-text" style="margin-top:14px"><b>装备流派：</b>' + c.clothes + '</p>' +
+            '<div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;align-items:center">' +
+              '<span class="tag tag-gray">操作难度：' + c.diffText + '</span>' +
+              '<a class="btn btn-ghost btn-sm" href="classes.html">查看职业与技能 →</a>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  })();
+
+  /* 游戏画面切换 */
+  var stage = document.getElementById('shotStage'), cap = document.getElementById('shotCap'), strip = document.getElementById('shotStrip');
+  strip.innerHTML = DB.shots.map(function (s, i) {
+    return '<div class="shot-thumb' + (i === 0 ? ' is-active' : '') + '" data-i="' + i + '"><img src="' + s.src + '" alt="' + s.cap + '"></div>';
+  }).join('');
+  function showShot(i) {
+    stage.src = DB.shots[i].src; stage.alt = DB.shots[i].cap; cap.textContent = DB.shots[i].cap;
+    strip.querySelectorAll('.shot-thumb').forEach(function (t) { t.classList.toggle('is-active', +t.dataset.i === i); });
+  }
+  strip.addEventListener('click', function (e) {
+    var t = e.target.closest('.shot-thumb'); if (t) showShot(+t.dataset.i);
+  });
+  showShot(0);
+
+  /* 最新公告（走 API，含 loading 骨架屏） */
+  var newsBox = document.getElementById('homeNews');
+  newsBox.innerHTML = '<div class="skeleton sk-line w40"></div><div class="skeleton sk-line w90"></div>' +
+    '<div class="skeleton sk-line w70"></div><div class="skeleton sk-line w90"></div>';
+  API.fetchNews({ page: 1, pageSize: 5 }).then(function (res) {
+    var tagMap = { '公告': 'tag-blue', '活动': 'tag-gold', '更新': 'tag-ok' };
+    newsBox.innerHTML = res.data.list.map(function (n) {
+      var d = App.fmtDate(n.date);
+      return '<a class="news-item" href="news-detail.html?id=' + n.id + '">' +
+        '<span class="news-date"><b>' + d.d + '</b><span>' + d.ym + '</span></span>' +
+        '<span class="news-main"><h4>' + esc(n.title) + '</h4><p>' + esc(n.summary) + '</p>' +
+        '<span class="tag ' + tagMap[n.type] + '">' + n.type + '</span></span></a>';
+    }).join('');
+  });
+
+  /* 进行中的活动 */
+  var actBox = document.getElementById('homeActs');
+  actBox.innerHTML = '<div class="skeleton sk-block"></div>';
+  API.fetchActivities('进行中').then(function (res) {
+    actBox.innerHTML = res.data.slice(0, 3).map(function (a) {
+      return '<a class="card act-card corner" style="margin:0" href="activity.html#' + a.id + '">' +
+        '<div class="act-banner"><img src="' + a.banner + '" alt="' + a.name + '"><span class="tag tag-red">' + a.status + '</span></div>' +
+        '<div class="act-body"><h4 class="card-title" style="font-size:16.5px">' + a.name + '</h4>' +
+        '<p class="card-text" style="font-size:13px">' + a.desc + '</p>' +
+        '<div class="act-time" data-icon="clock" data-icon-size="14">' + a.start + ' 至 ' + a.end + '</div></div></a>';
+    }).join('');
+    App.initDynamic(actBox);
+  });
+
+  App.initDynamic(document);
+})();
+</script>
+</body>
+</html>

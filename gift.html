@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>福利兑换 - 小小屠龙-冰雪复古下载</title>
+<meta name="description" content="小小屠龙 · 冰雪复古 福利中心：关注福利领取与礼包码兑换。">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="gift">
+<header class="site-header" id="siteHeader"></header>
+<main class="page">
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Gift</span>
+        <h1 class="section-title">福利兑换</h1>
+        <p class="section-desc">关注福利与礼包码兑换。每个账号每个礼包限领一次。</p>
+      </div>
+
+      <div class="split">
+        <div class="panel reveal">
+          <h2 class="card-title" style="margin-bottom:16px">礼包码兑换</h2>
+          <div class="field">
+            <input class="input" id="codeInput" placeholder="请输入礼包码，如 VIP888" maxlength="12" autocomplete="off">
+          </div>
+          <button class="btn btn-gold btn-block" id="redeemBtn" type="button">立即兑换</button>
+          <p class="form-msg" id="codeMsg"></p>
+          <div class="gift-preview" id="codePreview"></div>
+        </div>
+
+        <div class="panel reveal">
+          <h2 class="card-title" style="margin-bottom:16px">关注福利</h2>
+          <div id="welfareList"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="siteFooter"></footer>
+<button class="to-top" id="toTop" aria-label="返回顶部"></button>
+
+<script src="mock.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
+<script>
+(function () {
+  var esc = App.esc;
+
+  /* 礼包码兑换 */
+  var input = document.getElementById('codeInput');
+  var msg = document.getElementById('codeMsg');
+  var prev = document.getElementById('codePreview');
+  document.getElementById('redeemBtn').addEventListener('click', function () {
+    msg.className = 'form-msg';
+    msg.textContent = '';
+    prev.innerHTML = '';
+    API.redeemGift(input.value).then(function (res) {
+      if (res.code !== 0) { msg.className = 'form-msg is-error'; msg.textContent = res.msg; return; }
+      msg.className = 'form-msg is-ok';
+      msg.textContent = '兑换成功：' + res.data.name;
+      prev.innerHTML = '<p class="card-text" style="margin-bottom:10px">获得奖励</p><div class="gift-row">' +
+        res.data.items.map(function (i) { return '<span class="tag tag-gold">' + esc(i) + '</span>'; }).join('') + '</div>';
+    });
+  });
+
+  /* 关注福利 */
+  function load() {
+    var box = document.getElementById('welfareList');
+    box.innerHTML = '<div class="skeleton sk-line w90"></div><div class="skeleton sk-line w70"></div>';
+    API.fetchWelfare().then(function (res) {
+      box.innerHTML = res.data.map(function (w) {
+        var done = w.status === '已领取';
+        return '<div class="welfare-item">' +
+          '<span class="w-icon" data-icon="' + w.icon + '" data-icon-size="20"></span>' +
+          '<div style="flex:1"><b style="display:block;margin-bottom:4px">' + esc(w.title) + '</b>' +
+          '<p class="card-text" style="font-size:13px;margin:0">' + esc(w.desc) + '</p>' +
+          '<p class="card-text" style="font-size:13px;margin:4px 0 0;color:var(--pri-2)">奖励：' + esc(w.reward) + '</p></div>' +
+          '<button class="btn ' + (done ? 'btn-ghost' : 'btn-gold') + ' btn-sm" data-id="' + w.id + '" type="button"' +
+          (done ? ' disabled' : '') + '>' + (done ? '已领取' : '领取') + '</button></div>';
+      }).join('');
+      App.initDynamic(box);
+      box.querySelectorAll('button[data-id]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          API.claimWelfare(b.dataset.id).then(function (r) {
+            App.toast(r.code === 0 ? ('领取成功：' + r.data.reward) : r.msg, r.code === 0 ? 'ok' : 'error');
+            if (r.code === 0) load();
+          });
+        });
+      });
+    });
+  }
+  load();
+})();
+</script>
+</body>
+</html>

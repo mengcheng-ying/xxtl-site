@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>职业介绍 - 小小屠龙-冰雪复古下载</title>
+<meta name="description" content="小小屠龙 · 冰雪复古 职业定位与技能说明：单职业的定位、属性与核心技能。">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="classes">
+<header class="site-header" id="siteHeader"></header>
+<main class="page">
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Classes</span>
+        <h1 class="section-title">职业与技能</h1>
+        <p class="section-desc">本作为单职业设定，所有玩家同一起跑线。具体数值以游戏内正式版本为准。</p>
+      </div>
+      <div class="grid" style="gap:24px" id="clsList"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="siteFooter"></footer>
+<button class="to-top" id="toTop" aria-label="返回顶部"></button>
+
+<script src="mock.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
+<script>
+(function () {
+  var esc = App.esc;
+  function bar(label, v) {
+    return '<div class="stat-bar"><div><span>' + label + '</span><span>' + v + '</span></div>' +
+      '<i><b style="width:' + v + '%"></b></i></div>';
+  }
+  document.getElementById('clsList').innerHTML = DB.classes.map(function (c) {
+    var sk = (c.skills || []).map(function (s) {
+      return '<div class="card" style="padding:16px;margin:0">' +
+        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">' +
+        '<span class="f-icon" data-icon="' + s.icon + '" data-icon-size="18" style="margin:0"></span>' +
+        '<b style="font-size:15px">' + esc(s.name) + '</b></div>' +
+        '<p class="card-text" style="font-size:13.5px">' + esc(s.desc) + '</p></div>';
+    }).join('');
+    return '<div class="card corner reveal" id="' + c.key + '">' +
+      '<div class="split" style="align-items:start;gap:28px">' +
+        '<div>' +
+          '<div class="class-art" style="margin-bottom:0">' +
+            '<img src="' + IMG[c.art] + '" alt="' + esc(c.name) + '立绘">' +
+            '<span class="class-role tag tag-blue">' + esc(c.role) + '</span>' +
+            '<div class="class-name"><b>' + esc(c.name) + '</b><span>' + esc(c.en) + '</span></div>' +
+          '</div>' +
+        '</div>' +
+        '<div>' +
+          '<h2 class="section-title" style="font-size:26px;margin-bottom:8px">' + esc(c.name) + '</h2>' +
+          '<p class="card-text" style="margin-bottom:16px">' + esc(c.desc) + '</p>' +
+          bar('攻击', c.stats.atk) + bar('防御', c.stats.def) + bar('生存', c.stats.hp) + bar('控制', c.stats.ctrl) +
+          '<p class="card-text" style="margin-top:14px"><b>装备流派：</b>' + esc(c.clothes || '—') + '</p>' +
+          '<div style="margin-top:8px"><span class="tag tag-gray">操作难度：' + esc(c.diffText) + '</span></div>' +
+          '<h3 class="card-title" style="margin:26px 0 12px;font-size:17px">核心技能</h3>' +
+          '<div class="grid grid-2" style="gap:12px">' + sk + '</div>' +
+        '</div>' +
+      '</div></div>';
+  }).join('');
+  App.initDynamic(document);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>公告详情 - 小小屠龙-冰雪复古下载</title>
+<meta name="description" content="小小屠龙 · 冰雪复古 官方公告详情。">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="news-detail">
+<header class="site-header" id="siteHeader"></header>
+<main class="page">
+
+  <section class="section">
+    <div class="container">
+      <p class="section-desc" style="margin-bottom:16px"><a href="news.html">← 返回公告列表</a></p>
+      <div id="detailBox"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="siteFooter"></footer>
+<button class="to-top" id="toTop" aria-label="返回顶部"></button>
+
+<script src="mock.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
+<script>
+(function () {
+  var esc = App.esc;
+  var id = new URLSearchParams(location.search).get('id');
+  var box = document.getElementById('detailBox');
+  box.innerHTML = '<div class="skeleton sk-line w40"></div><div class="skeleton sk-block"></div>';
+  if (!id) { box.innerHTML = '<div class="empty">缺少公告编号，请从公告列表进入</div>'; return; }
+  API.fetchNewsDetail(id).then(function (res) {
+    if (res.code !== 0) { box.innerHTML = '<div class="empty">' + esc(res.msg) + '</div>'; return; }
+    var n = res.data;
+    document.title = n.title + ' - 小小屠龙 · 冰雪复古';
+    box.innerHTML = '<h1 class="section-title" style="font-size:30px;margin-bottom:12px">' + esc(n.title) + '</h1>' +
+      '<p class="card-text" style="margin-bottom:20px">' + esc(n.date) + ' · ' + esc(n.author || '运营组') +
+      ' · ' + esc(n.type) + '</p>' +
+      '<div class="panel" style="margin-bottom:20px">' +
+      (n.content || []).map(function (p) { return '<p style="margin:0 0 14px">' + esc(p) + '</p>'; }).join('') +
+      '</div>' +
+      '<p style="text-align:center;margin-top:28px"><a class="btn btn-gold" href="download.html">立即下载游戏</a></p>';
+  });
+})();
+</script>
+</body>
+</html>

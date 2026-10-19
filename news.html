@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>新闻公告 - 小小屠龙-冰雪复古下载</title>
+<meta name="description" content="小小屠龙 · 冰雪复古 官方公告、版本更新与活动资讯。">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="news">
+<header class="site-header" id="siteHeader"></header>
+<main class="page">
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">News</span>
+        <h1 class="section-title">新闻公告</h1>
+        <p class="section-desc">开服、活动与版本更新，都会在这里同步。</p>
+      </div>
+      <div class="tabs" id="newsTabs"></div>
+      <div id="newsList" style="margin-top:8px"></div>
+      <div style="text-align:center;margin-top:32px">
+        <button class="btn btn-ghost" id="loadMore" type="button">加载更多</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="siteFooter"></footer>
+<button class="to-top" id="toTop" aria-label="返回顶部"></button>
+
+<script src="mock.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
+<script>
+(function () {
+  var esc = App.esc, cur = '全部', page = 1, total = 0;
+  var TYPES = ['全部', '公告', '更新', '活动'];
+  var tagMap = { '公告': 'tag-blue', '活动': 'tag-gold', '更新': 'tag-ok' };
+
+  document.getElementById('newsTabs').innerHTML = TYPES.map(function (t) {
+    return '<button class="tab' + (t === '全部' ? ' is-active' : '') + '" data-t="' + t + '" type="button">' + t + '</button>';
+  }).join('');
+
+  function render(list) {
+    return list.map(function (n) {
+      var d = App.fmtDate(n.date);
+      return '<a class="news-item" href="news-detail.html?id=' + n.id + '">' +
+        '<span class="news-date"><b>' + d.d + '</b><span>' + d.ym + '</span></span>' +
+        '<span class="news-main"><h4>' + esc(n.title) + '</h4><p>' + esc(n.summary) + '</p>' +
+        '<span class="tag ' + (tagMap[n.type] || 'tag-gray') + '">' + esc(n.type) + '</span></span></a>';
+    }).join('');
+  }
+  function load(reset) {
+    var box = document.getElementById('newsList');
+    if (reset) { box.innerHTML = '<div class="skeleton sk-line w90"></div><div class="skeleton sk-line w70"></div><div class="skeleton sk-line w90"></div>'; page = 1; }
+    API.fetchNews({ page: page, pageSize: 6, type: cur }).then(function (res) {
+      total = res.data.total;
+      var html = render(res.data.list);
+      if (reset) box.innerHTML = html || '<div class="empty">暂无公告</div>';
+      else box.insertAdjacentHTML('beforeend', html);
+      var btn = document.getElementById('loadMore');
+      btn.style.display = (page * 6 < total) ? '' : 'none';
+    });
+  }
+  document.getElementById('newsTabs').addEventListener('click', function (e) {
+    var t = e.target.closest('.tab'); if (!t) return;
+    cur = t.dataset.t;
+    this.querySelectorAll('.tab').forEach(function (x) { x.classList.toggle('is-active', x === t); });
+    load(true);
+  });
+  document.getElementById('loadMore').addEventListener('click', function () { page++; load(false); });
+  load(true);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>游戏介绍 - 小小屠龙-冰雪复古下载</title>
+<meta name="description" content="小小屠龙 · 冰雪复古：1.76 经典内核复刻，单职业公平竞技，装备全靠打，行会攻城万人同屏，手机 PC 数据互通。">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="game">
+<header class="site-header" id="siteHeader"></header>
+<main class="page">
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">About</span>
+        <h1 class="section-title">游戏介绍</h1>
+        <p class="section-desc" id="gameSlogan"></p>
+      </div>
+      <div class="panel reveal" id="worldBox"></div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Systems</span>
+        <h2 class="section-title" style="font-size:26px">核心玩法系统</h2>
+      </div>
+      <div class="grid grid-3" id="sysGrid"></div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Compare</span>
+        <h2 class="section-title" style="font-size:26px">和市面上其它传奇比</h2>
+      </div>
+      <div class="table-wrap"><table class="data-table" id="cmpTable"></table></div>
+    </div>
+  </section>
+
+  <section class="section" id="guide">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Guide</span>
+        <h2 class="section-title" style="font-size:26px">玩法图鉴 · 24 张实拍</h2>
+        <p class="section-desc">游戏内「成长之路」面板实拍：人物成长 6 项、装备体系 6 项、养成玩法 7 项、怪物与 BOSS 5 项。点击图片看大图。</p>
+      </div>
+      <div id="guideBox"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Reviews</span>
+        <h2 class="section-title" style="font-size:26px">玩家评价</h2>
+        <p class="section-desc">以下为试玩玩家反馈，上线后逐步补充。</p>
+      </div>
+      <div class="grid grid-3" id="reviewGrid"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="siteFooter"></footer>
+<button class="to-top" id="toTop" aria-label="返回顶部"></button>
+
+<script src="mock.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
+<script>
+(function () {
+  var esc = App.esc;
+  document.getElementById('gameSlogan').textContent = DB.brand.slogan + '　' + DB.brand.intro;
+
+  document.getElementById('worldBox').innerHTML =
+    (DB.about.world || []).map(function (p) { return '<p style="margin:0 0 14px;line-height:1.9">' + esc(p) + '</p>'; }).join('');
+
+  document.getElementById('sysGrid').innerHTML = DB.systems.map(function (s, i) {
+    return '<div class="card corner reveal" style="--d:' + (i % 3) * 80 + 'ms">' +
+      '<div class="f-icon" data-icon="' + s.icon + '" data-icon-size="22"></div>' +
+      '<h3 class="card-title">' + esc(s.name) + ' <span class="tag tag-blue" style="margin-left:6px">' + esc(s.tag) + '</span></h3>' +
+      '<p class="card-text">' + esc(s.desc) + '</p></div>';
+  }).join('');
+
+  document.getElementById('cmpTable').innerHTML =
+    '<thead><tr><th>对比项</th><th>小小屠龙 · 冰雪复古</th><th>市面常见传奇手游</th></tr></thead><tbody>' +
+    DB.about.compare.map(function (c) {
+      return '<tr><td>' + esc(c.item) + '</td><td>' + esc(c.retro) + '</td><td>' + esc(c.now) + '</td></tr>';
+    }).join('') + '</tbody>';
+
+  document.getElementById('reviewGrid').innerHTML = DB.reviews.map(function (r, i) {
+    return '<div class="card corner reveal" style="--d:' + (i % 3) * 80 + 'ms">' +
+      '<p class="card-text" style="margin-bottom:12px">“' + esc(r.text) + '”</p>' +
+      '<div style="display:flex;justify-content:space-between;align-items:center">' +
+      '<b style="font-size:14px">' + esc(r.name) + '</b>' +
+      '<span class="tag tag-gray">' + esc(r.server) + '</span></div></div>';
+  }).join('');
+
+  /* 玩法图鉴：按分组渲染 */
+  (function () {
+    var groups = [];
+    DB.guides.forEach(function (g) {
+      var last = groups[groups.length - 1];
+      if (!last || last.name !== g.g) groups.push({ name: g.g, items: [g] });
+      else last.items.push(g);
+    });
+    document.getElementById('guideBox').innerHTML = groups.map(function (grp) {
+      return '<h3 class="section-title" style="font-size:20px;margin:30px 0 14px">' + esc(grp.name) +
+        ' <span class="tag tag-blue">' + grp.items.length + ' 项</span></h3>' +
+        '<div class="grid grid-3" style="gap:16px">' +
+        grp.items.map(function (g) {
+          return '<a class="card corner" href="' + g.src + '" target="_blank" rel="noopener"' +
+            ' style="padding:0;overflow:hidden;margin:0;text-decoration:none">' +
+            '<img src="' + g.src + '" alt="' + esc(g.t) + ' - 小小屠龙冰雪复古"' + ' loading="lazy"' +
+            ' style="width:100%;height:auto;display:block">' +
+            '<div style="padding:12px 14px">' +
+            '<b style="display:block;font-size:15px;margin-bottom:6px">' + esc(g.t) + '</b>' +
+            '<p class="card-text" style="font-size:13px;margin:0;line-height:1.7">' + esc(g.d) + '</p>' +
+            '</div></a>';
+        }).join('') + '</div>';
+    }).join('');
+  })();
+
+  App.initDynamic(document);
+})();
+</script>
+</body>
+</html>

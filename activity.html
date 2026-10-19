@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>活动专区 - 小小屠龙-冰雪复古下载</title>
+<meta name="description" content="小小屠龙 · 冰雪复古 活动专区：开服活动、限时福利与攻城赛事。">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="activity">
+<header class="site-header" id="siteHeader"></header>
+<main class="page">
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Events</span>
+        <h1 class="section-title">活动专区</h1>
+        <p class="section-desc">开服活动与限时福利，奖励需在活动结束前领取。</p>
+      </div>
+      <div class="tabs" id="actTabs"></div>
+      <div class="grid" style="gap:20px;margin-top:8px" id="actList"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="siteFooter"></footer>
+<button class="to-top" id="toTop" aria-label="返回顶部"></button>
+
+<script src="mock.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
+<script>
+(function () {
+  var esc = App.esc, cur = '进行中';
+  var TABS = ['进行中', '已结束'];
+  document.getElementById('actTabs').innerHTML = TABS.map(function (t) {
+    return '<button class="tab' + (t === cur ? ' is-active' : '') + '" data-t="' + t + '" type="button">' + t + '</button>';
+  }).join('');
+
+  function render(list) {
+    if (!list.length) return '<div class="empty">暂无活动</div>';
+    return list.map(function (a) {
+      var st = a.status === '进行中' ? 'tag-red' : (a.status === '即将开始' ? 'tag-gold' : 'tag-gray');
+      return '<div class="card act-card corner" id="' + a.id + '" style="margin:0">' +
+        '<div class="act-banner"><img src="' + a.banner + '" alt="' + esc(a.name) + '">' +
+        '<span class="tag ' + st + '">' + esc(a.status) + '</span></div>' +
+        '<div class="act-body"><h3 class="card-title" style="font-size:18px">' + esc(a.name) + '</h3>' +
+        '<p class="card-text">' + esc(a.desc) + '</p>' +
+        '<div class="act-time" data-icon="clock" data-icon-size="14">' + esc(a.start) + ' 至 ' + esc(a.end) + '（' + esc(a.scope || '全服') + '）</div>' +
+        '<div class="act-reward">' + (a.reward || []).map(function (r) { return '<span class="tag tag-gold">' + esc(r) + '</span>'; }).join('') + '</div>' +
+        '<ul style="margin:10px 0 0;padding-left:18px;font-size:13.5px;color:var(--sub)">' +
+        (a.rules || []).map(function (r) { return '<li style="margin-bottom:6px">' + esc(r) + '</li>'; }).join('') + '</ul>' +
+        '</div></div>';
+    }).join('');
+  }
+  function load() {
+    var box = document.getElementById('actList');
+    box.innerHTML = '<div class="skeleton sk-block"></div>';
+    API.fetchActivities(cur).then(function (res) {
+      box.innerHTML = render(res.data);
+      App.initDynamic(box);
+    });
+  }
+  document.getElementById('actTabs').addEventListener('click', function (e) {
+    var t = e.target.closest('.tab'); if (!t) return;
+    cur = t.dataset.t;
+    this.querySelectorAll('.tab').forEach(function (x) { x.classList.toggle('is-active', x === t); });
+    load();
+  });
+  load();
+})();
+</script>
+</body>
+</html>
