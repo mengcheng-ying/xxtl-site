@@ -64,6 +64,18 @@
     </div>
   </section>
 
+  <!-- ============ 版本四大核心玩法 ============ -->
+  <section class="section section--tight" id="core">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Gameplay</span>
+        <h2 class="section-title">版本<span class="hl">四大核心玩法</span></h2>
+        <p class="section-desc">装备保值、公平抢宝、打金流转、词条逆袭 —— 这一版把「散人能不能活下去」写进了底层设计。</p>
+      </div>
+      <div class="grid grid-2" id="coreGrid"></div>
+    </div>
+  </section>
+
   <!-- ============ 三大职业 ============ -->
   <section class="section">
     <div class="container">
@@ -153,6 +165,17 @@
       '<div class="f-icon" data-icon="' + f.icon + '" data-icon-size="22"></div>' +
       '<h3 class="card-title">' + f.title + '</h3>' +
       '<p class="card-text">' + f.desc + '</p></div>';
+  }).join('');
+
+  /* 版本四大核心玩法 */
+  document.getElementById('coreGrid').innerHTML = DB.core.map(function (c, i) {
+    return '<div class="card corner reveal" style="--d:' + (i % 2) * 90 + 'ms">' +
+      '<div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">' +
+        '<span style="font-family:var(--font-display);font-size:34px;line-height:1;color:var(--gold);opacity:.5">' + c.no + '</span>' +
+        '<div class="f-icon" data-icon="' + c.icon + '" data-icon-size="22" style="margin-bottom:0"></div>' +
+      '</div>' +
+      '<h3 class="card-title">' + esc(c.title) + ' <span class="tag tag-blue" style="margin-left:6px">' + esc(c.tag) + '</span></h3>' +
+      '<p class="card-text">' + esc(c.desc) + '</p></div>';
   }).join('');
 
   /* 单职业（本作为单职业设定） */
